@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nepal Passport Status | नेपाल पासपोर्ट स्थिति</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Open Sans', 'Noto Sans Devanagari', sans-serif;
+  background: #f2f4f8;
+  color: #222;
+  min-height: 100vh;
+}
+
+/* HEADER */
+header {
+  background: #2460B9;
+  padding: 0;
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+}
+
+.header-left h1 {
+  color: #fff;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.header-left p {
+  color: rgba(255,255,255,0.7);
+  font-size: 0.72rem;
+  margin-top: 2px;
+  font-family: 'Noto Sans Devanagari', sans-serif;
+}
+
+.lang-bar {
+  display: flex;
+  gap: 6px;
+}
+
+.lang-btn {
+  padding: 5px 14px;
+  border: 1.5px solid rgba(255,255,255,0.4);
+  background: transparent;
+  color: rgba(255,255,255,0.8);
+  font-size: 0.78rem;
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'Noto Sans Devanagari', 'Open Sans', sans-serif;
+  transition: all 0.15s;
+}
+
+.lang-btn.active {
+  background: #fff;
+  color: #2460B9;
+  border-color: #fff;
+}
+
+/* LIVE STRIP */
+.live-strip {
+  background: #e8f0fe;
+  border-bottom: 1px solid #c5d4f5;
+  padding: 7px 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  color: #2460B9;
+  font-weight: 600;
+}
+
+.dot {
+  width: 8px; height: 8px;
+  background: #2ecc71;
+  border-radius: 50%;
+  animation: blink 1.8s infinite;
+}
+
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+/* MAIN LAYOUT */
+main {
+  max-width: 520px;
+  margin: 24px auto;
+  padding: 0 14px 60px;
+}
+
+/* PAGE TITLE */
+.page-title {
+  background: #2460B9;
+  color: #fff;
+  padding: 12px 16px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border-radius: 4px 4px 0 0;
+  font-family: 'Noto Sans Devanagari', 'Open Sans', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.page-sub {
+  background: #fff;
+  border: 1px solid #d0d8e8;
+  border-top: none;
+  padding: 10px 16px;
+  font-size: 0.8rem;
+  color: #555;
+  font-family: 'Noto Sans Devanagari', 'Open Sans', sans-serif;
+  line-height: 1.5;
+}
+
+/* TABS */
+.tabs {
+  display: flex;
+  margin-top: 18px;
+  border-bottom: 2px solid #2460B9;
+}
+
+.tab-btn {
+  padding: 9px 18px;
+  border: 1px solid #d0d8e8;
+  border-bottom: none;
+  background: #eef1f8;
+  color: #555;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Noto Sans Devanagari', 'Open Sans', sans-serif;
+  transition: all 0.15s;
+  margin-right: 4px;
+  border-radius: 4px 4px 0 0;
+}
+
+.tab-btn.active {
+  background: #2460B9;
+  color: #fff;
+  border-color: #2460B9;
+}
+
+/* FORM CARD */
+.form-card {
+  background: #fff;
+  border: 1px solid #d0d8e8;
+  border-top: none;
+  padding: 20px 18px;
+  display: none;
+}
+
+.form-card.active { display: block; }
+
+.form-card h3 {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #2460B9;
+  margin-bottom: 4px;
+  border-left: 3px solid #c0392b;
+  padding-left: 8px;
+  font-family: 'Noto Sans Devanagari', 'Open Sans', sans-serif;
+}
+
+.form-card p {
+  font-size: 0.76rem;
+  color: #777;
+  margin-bottom: 16px;
+  padding-left: 11px;
+  font-family: 'Noto Sans Devanagari', 'Open Sans', sans-serif;
+}
+
+/* FIELD */
+.field { margin-bottom: 14px; }
+
+label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 4px;
+  font-family: 'Noto Sans Devanagari', 'Open Sans', sans-serif;
+}
+
+.req { color: #c0392b; margin-left: 2px; }
+
+input {
+  width: 100%;
+  padding: 9px 11px;
+  border: 1px solid #b0bcd0;
+  border-radius: 3px;
+  font-size: 0.85rem;
+  font-family: 'Open Sans', sans-serif;
+  color: #222;
+  background: #fff;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+input:focus {
+  border-color: #2460B9;
+  box-shadow: 0 0 0 2px rgba(26,58,143,0.1);
+}
+
+input::placeholder { color: #aab; font-size: 0.8rem; }
+
+.hint {
+  font-size: 0.71rem;
+  color: #888;
+  margin-top: 3px;
+  font-family: 'Noto Sans Devanagari', 'Open Sans', sans-serif;
+}
+
+/* BUTTON */
+.btn {
+  background: #c0392b;
+  color: #fff;
+  border: none;
+  padding: 10px 24px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  border-radius: 3px;
+  cursor: pointer;
+  font-family: 'Noto Sans Devanagari', 'Open Sans', sans-serif;
+  margin-top: 6px;
+  transition: background 0.15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.btn:hover { background: #a93226; }
+.btn:disabled { opacity: 0.65; cursor: not-allowed; }
+
+/* RESULT */
+.result {
+  margin-top: 16px;
+  border-radius: 3px;
+  overflow: hidden;
+  display: none;
+}
+
+.result.show { display: block; }
+
+.result-head {
+  padding: 9px 14px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  font-family: 'Noto Sans Devanagari', 'Open Sans', sans-serif;
+}
+
+.result-body {
+  padding: 12px 14px;
+  font-size: 0.83rem;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  font-family: 'Noto Sans Devanagari', 'Open Sans', sans-serif;
+}
+
+.result.ok .result-head { background: #d5f5e3; color: #1e8449; }
+.result.ok .result-body { background: #eafaf1; color: #1a5e34; border: 1px solid #a9dfbf; border-top: none; }
+.result.err .result-head { background: #fadbd8; color: #922b21; }
+.result.err .result-body { background: #fdf2f0; color: #7b241c; border: 1px solid #f1948a; border-top: none; }
+.result.wait .result-head { background: #d6eaf8; color: #1a5276; }
+.result.wait .result-body { background: #eaf4fb; color: #154360; border: 1px solid #85c1e9; border-top: none; }
+
+/* SPINNER */
+.spin { width:14px; height:14px; border:2px solid rgba(255,255,255,0.4); border-top-color:#fff; border-radius:50%; animation:rot 0.7s linear infinite; }
+@keyframes rot { to { transform:rotate(360deg) } }
+
+/* INFO BOX */
+.info-box {
+  background: #fef9e7;
+  border: 1px solid #f9e79f;
+  border-left: 3px solid #f0c040;
+  padding: 10px 13px;
+  font-size: 0.75rem;
+  color: #7d6608;
+  margin-top: 18px;
+  line-height: 1.6;
+  font-family: 'Noto Sans Devanagari', 'Open Sans', sans-serif;
+}
+
+/* FOOTER */
+footer {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 0 14px 30px;
+}
+
+.creator-box {
+  background: #fff;
+  border: 1px solid #d0d8e8;
+  border-top: 3px solid #2460B9;
+  border-radius: 0 0 4px 4px;
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.creator-avatar {
+  width: 52px; height: 52px;
+  background: #2460B9;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 1.4rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.creator-info { display: flex; flex-direction: column; justify-content: center; gap: 3px; }
+.creator-info .cname { font-size: 0.92rem; font-weight: 700; color: #2460B9; line-height: 1; }
+.creator-info .crole { font-size: 0.76rem; color: #888; font-family: 'Noto Sans Devanagari', 'Open Sans', sans-serif; line-height: 1; }
+.creator-info .cphone { font-size: 0.76rem; color: #444; line-height: 1; margin-top: 1px; }
+
+.footer-note {
+  font-size: 0.7rem;
+  color: #999;
+  text-align: center;
+  margin-top: 10px;
+  font-family: 'Noto Sans Devanagari', 'Open Sans', sans-serif;
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="header-left">
+      <h1 id="h-title">NEPAL PASSPORT STATUS</h1>
+      <p id="h-sub">पासपोर्ट स्थिति जाँच</p>
+    </div>
+    <div class="lang-bar">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('np')">NP</button>
+    </div>
+  </div>
+</header>
+
+<!-- LIVE STRIP -->
+<div class="live-strip">
+  <div class="dot"></div>
+  <span id="badge-txt">Live Status Check</span>
+</div>
+
+<!-- MAIN -->
+<main>
+  <div class="page-title">
+    <span id="main-title">Check Passport Status</span>
+  </div>
+  <div class="page-sub" id="main-sub">Enter your details below to check if your passport is printed, dispatched, or ready to collect.</div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab-btn active" id="tbtn1" onclick="switchTab('ref')">By Reference No.</button>
+    <button class="tab-btn" id="tbtn2" onclick="switchTab('det')">By Personal Details</button>
+  </div>
+
+  <!-- CARD 1 -->
+  <div class="form-card active" id="card-ref">
+    <h3 id="c1h">Quick Check</h3>
+    <p id="c1s">Enter your application reference number</p>
+
+    <div class="field">
+      <label id="l-ref">Reference Number <span class="req">*</span></label>
+      <input type="text" id="inp-ref" placeholder="उदाहरण: a1bc89db-aafd-7532-807c-4948620141b9"/>
+      <div class="hint" id="h-ref"></div>
+    </div>
+
+    <button class="btn" id="btn-ref" onclick="checkRef()">
+      <span id="brt">Check Status</span>
+    </button>
+
+    <div class="result" id="res-ref">
+      <div class="result-head" id="res-ref-h"></div>
+      <div class="result-body" id="res-ref-b"></div>
+    </div>
+  </div>
+
+  <!-- CARD 2 -->
+  <div class="form-card" id="card-det">
+    <h3 id="c2h">Check with Details</h3>
+    <p id="c2s">Enter your citizenship and personal information</p>
+
+    <div class="field">
+      <label id="l-cit">Citizenship Number <span class="req">*</span></label>
+      <input type="text" id="inp-cit" placeholder="Citizenship Number"/>
+      <div class="hint" id="h-cit">Donot use "-"&nbsp;&nbsp; Example: 467328412</div>
+    </div>
+
+    <div class="field">
+      <label id="l-dob">Date of Birth (AD) <span class="req">*</span></label>
+      <input type="text" id="inp-dob" placeholder="YYYY-MM-DD"/>
+      <div class="hint" id="h-dob">Use AD date. Example: 1995-06-15</div>
+    </div>
+
+    <div class="field">
+      <label id="l-pob">Place of Birth <span class="req">*</span></label>
+      <input type="text" id="inp-pob" placeholder="Place of Birth"/>
+      <div class="hint" id="h-pob">Example: Butwal</div>
+    </div>
+
+    <div class="field">
+      <label id="l-sur">Surname <span class="req">*</span></label>
+      <input type="text" id="inp-sur" placeholder="Surname"/>
+      <div class="hint" id="h-sur">Example: Sharma</div>
+    </div>
+
+    <button class="btn" id="btn-det" onclick="checkDet()">
+      <span id="bdt">Check Status</span>
+    </button>
+
+    <div class="result" id="res-det">
+      <div class="result-head" id="res-det-h"></div>
+      <div class="result-body" id="res-det-b"></div>
+    </div>
+  </div>
+
+  <div class="info-box" id="info-txt">
+    Data is fetched from <strong>Department of Passports, Government of Nepal</strong>.
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="creator-box">
+    <div class="creator-avatar">A</div>
+    <div class="creator-info">
+      <div class="cname" id="cname">Aaditya Pokhrel</div>
+      <div class="crole" id="crole">Developer</div>
+      <div class="cphone">aadityapokhrel63@gmail.com</div>
+    </div>
+  </div>
+  <div class="footer-note" id="fnote">This is an unofficial helper tool. Not affiliated with the Government of Nepal.</div>
+</footer>
+
+<script>
+const T = {
+  en: {
+    htitle:'NEPAL PASSPORT STATUS', hsub:'पासपोर्ट स्थिति जाँच',
+    badge:'Live Status Check',
+    title:'Check Passport Status',
+    sub:'Enter your details below to check if your passport is printed, dispatched, or ready to collect.',
+    tb1:'By Reference No.', tb2:'By Personal Details',
+    c1h:'Quick Check', c1s:'Enter your application reference number',
+    lRef:'Reference Number', hRef:'',
+    phRef:'उदाहरण: a1bc89db-aafd-7532-807c-4948620141b9',
+    c2h:'Check with Details', c2s:'Enter your citizenship and personal information',
+    lCit:'Citizenship Number', hCit:'Donot use "-"  Example: 467328412', phCit:'Citizenship Number',
+    lDob:'Date of Birth (AD)', hDob:'Use AD date. Example: 1995-06-15', phDob:'YYYY-MM-DD',
+    lPob:'Place of Birth', hPob:'Example: Butwal', phPob:'Place of Birth',
+    lSur:'Surname', hSur:'Example: Sharma', phSur:'Surname',
+    btn:'Check Status',
+    info:'Data is fetched from <strong>Department of Passports, Government of Nepal</strong>.',
+    cname:'Aaditya Pokhrel', crole:'Developer',
+    fnote:'This is an unofficial helper tool. Not affiliated with the Government of Nepal.',
+    errRef:'Please enter your reference number.',
+    errFill:'Please fill in all fields.',
+    loadH:'⏳ Checking...', loadB:'Please wait while we check your passport status...',
+    errH:'❌ Error', errB:'Could not connect. Please try again later.',
+  },
+  np: {
+    htitle:'नेपाल पासपोर्ट स्थिति', hsub:'Nepal Passport Status',
+    badge:'लाइभ स्थिति जाँच',
+    title:'पासपोर्ट स्थिति जाँच गर्नुहोस्',
+    sub:'तपाईंको पासपोर्ट छापिएको, पठाइएको वा संकलन गर्न तयार छ कि छैन जाँच गर्न तलका विवरण भर्नुहोस्।',
+    tb1:'सन्दर्भ नं. द्वारा', tb2:'व्यक्तिगत विवरणद्वारा',
+    c1h:'छिटो जाँच', c1s:'आफ्नो आवेदन सन्दर्भ नम्बर प्रविष्ट गर्नुहोस्',
+    lRef:'सन्दर्भ नम्बर', hRef:'',
+    phRef:'उदाहरण: a1bc89db-aafd-7532-807c-4948620141b9',
+    c2h:'विवरणसहित जाँच', c2s:'नागरिकता र व्यक्तिगत जानकारी प्रविष्ट गर्नुहोस्',
+    lCit:'नागरिकता नम्बर', hCit:'"-" प्रयोग नगर्नुहोस्।  उदाहरण: 467328412', phCit:'नागरिकता नम्बर',
+    lDob:'जन्म मिति (ईस्वी)', hDob:'ईस्वी मिति प्रयोग गर्नुहोस्। उदाहरण: 1995-06-15', phDob:'YYYY-MM-DD',
+    lPob:'जन्मस्थान', hPob:'उदाहरण: बुटवल', phPob:'जन्मस्थान',
+    lSur:'थर', hSur:'उदाहरण: शर्मा', phSur:'थर',
+    btn:'स्थिति जाँच गर्नुहोस्',
+    info:'डाटा <strong>पासपोर्ट विभाग, नेपाल सरकार</strong>बाट प्राप्त गरिन्छ।',
+    cname:'आदित्य पोख्रेल', crole:'विकासकर्ता',
+    fnote:'यो एक अनौपचारिक सहायक उपकरण हो। नेपाल सरकारसँग सम्बद्ध छैन।',
+    errRef:'कृपया सन्दर्भ नम्बर प्रविष्ट गर्नुहोस्।',
+    errFill:'कृपया सबै फिल्डहरू भर्नुहोस्।',
+    loadH:'⏳ जाँच गरिँदैछ...', loadB:'कृपया प्रतीक्षा गर्नुहोस्...',
+    errH:'❌ त्रुटि', errB:'जडान हुन सकेन। कृपया पछि पुनः प्रयास गर्नुहोस्।',
+  }
+};
+
+let lang = 'en';
+
+function setLang(l) {
+  lang = l;
+  document.querySelectorAll('.lang-btn').forEach((b,i) => b.classList.toggle('active',(i===0&&l==='en')||(i===1&&l==='np')));
+  const t = T[l];
+  document.getElementById('h-title').textContent = t.htitle;
+  document.getElementById('h-sub').textContent = t.hsub;
+  document.getElementById('badge-txt').textContent = t.badge;
+  document.getElementById('main-title').textContent = t.title;
+  document.getElementById('main-sub').textContent = t.sub;
+  document.getElementById('tbtn1').textContent = t.tb1;
+  document.getElementById('tbtn2').textContent = t.tb2;
+  document.getElementById('c1h').textContent = t.c1h;
+  document.getElementById('c1s').textContent = t.c1s;
+  document.getElementById('l-ref').innerHTML = t.lRef+' <span class="req">*</span>';
+  document.getElementById('inp-ref').placeholder = t.phRef;
+  document.getElementById('h-ref').textContent = t.hRef;
+  document.getElementById('c2h').textContent = t.c2h;
+  document.getElementById('c2s').textContent = t.c2s;
+  document.getElementById('l-cit').innerHTML = t.lCit+' <span class="req">*</span>';
+  document.getElementById('inp-cit').placeholder = t.phCit;
+  document.getElementById('h-cit').textContent = t.hCit;
+  document.getElementById('l-dob').innerHTML = t.lDob+' <span class="req">*</span>';
+  document.getElementById('inp-dob').placeholder = t.phDob;
+  document.getElementById('h-dob').textContent = t.hDob;
+  document.getElementById('l-pob').innerHTML = t.lPob+' <span class="req">*</span>';
+  document.getElementById('inp-pob').placeholder = t.phPob;
+  document.getElementById('h-pob').textContent = t.hPob;
+  document.getElementById('l-sur').innerHTML = t.lSur+' <span class="req">*</span>';
+  document.getElementById('inp-sur').placeholder = t.phSur;
+  document.getElementById('h-sur').textContent = t.hSur;
+  document.getElementById('brt').textContent = t.btn;
+  document.getElementById('bdt').textContent = t.btn;
+  document.getElementById('info-txt').innerHTML = t.info;
+  document.getElementById('cname').textContent = t.cname;
+  document.getElementById('crole').textContent = t.crole;
+  document.getElementById('fnote').textContent = t.fnote;
+}
+
+function switchTab(tab) {
+  document.getElementById('tbtn1').classList.toggle('active', tab==='ref');
+  document.getElementById('tbtn2').classList.toggle('active', tab==='det');
+  document.getElementById('card-ref').classList.toggle('active', tab==='ref');
+  document.getElementById('card-det').classList.toggle('active', tab==='det');
+}
+
+function showRes(id, type, head, body) {
+  const r = document.getElementById('res-'+id);
+  r.className = 'result show '+type;
+  document.getElementById('res-'+id+'-h').textContent = head;
+  document.getElementById('res-'+id+'-b').textContent = body;
+}
+
+function setBtn(id, loading) {
+  const b = document.getElementById('btn-'+id);
+  const t = T[lang];
+  b.disabled = loading;
+  const sid = id==='ref' ? 'brt' : 'bdt';
+  b.innerHTML = loading
+    ? '<div class="spin"></div> '+t.btn
+    : '<span id="'+sid+'">'+t.btn+'</span>';
+}
+
+async function checkRef() {
+  const val = document.getElementById('inp-ref').value.trim();
+  const t = T[lang];
+  if (!val) { showRes('ref','err','⚠️', t.errRef); return; }
+  setBtn('ref', true);
+  showRes('ref','wait', t.loadH, t.loadB);
+  try {
+    const response = await fetch('https://passport-backend-lif1.onrender.com/check-ref?ref='+encodeURIComponent(val));
+    const data = await response.json();
+    if(data.success){ showRes('ref','ok','✅ Status Found', data.data); }
+    else { showRes('ref','err','❌ '+t.errH, data.message); }
+  } catch(e) {
+    showRes('ref','err', t.errH, t.errB);
+  }
+  setBtn('ref', false);
+}
+
+async function checkDet() {
+  const cit = document.getElementById('inp-cit').value.trim();
+  const dob = document.getElementById('inp-dob').value.trim();
+  const pob = document.getElementById('inp-pob').value.trim();
+  const sur = document.getElementById('inp-sur').value.trim();
+  const t = T[lang];
+  if (!cit||!dob||!pob||!sur) { showRes('det','err','⚠️', t.errFill); return; }
+  setBtn('det', true);
+  showRes('det','wait', t.loadH, t.loadB);
+  try {
+    const response = await fetch('https://passport-backend-lif1.onrender.com/check-detail?citizenship='+encodeURIComponent(cit)+'&dob='+encodeURIComponent(dob)+'&pob='+encodeURIComponent(pob)+'&surname='+encodeURIComponent(sur));
+    const data = await response.json();
+    if(data.success){ showRes('det','ok','✅ Status Found', data.data); }
+    else { showRes('det','err','❌ '+t.errH, data.message); }
+  } catch(e) {
+    showRes('det','err', t.errH, t.errB);
+  }
+  setBtn('det', false);
+}
+</script>
+</body>
+</html>

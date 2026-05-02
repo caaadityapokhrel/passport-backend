@@ -79,7 +79,8 @@ app.get('/check-detail', async (req, res) => {
 
 // Health check
 app.get('/', (req, res) => {
-  res.json({ status: 'Nepal Passport Backend is running!' });
+  res.sendFile(__dirname + '/index.html');
+});
 });
 
 const PORT = process.env.PORT || 3000;

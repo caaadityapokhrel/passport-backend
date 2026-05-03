@@ -15,22 +15,19 @@ app.get('/check-ref', async (req, res) => {
 
   try {
     const response = await axios.post(
-      'https://nepalpassport.gov.np/en/passport-status',
-      new URLSearchParams({ reference_no: ref }),
+      'https://nepalpassport.gov.np/api/status',
+      JSON.stringify({ referenceId: ref }),
       {
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-          'Referer': 'https://nepalpassport.gov.np/en'
+          'Content-Type': 'text/plain;charset=UTF-8',
+          'Origin': 'https://nepalpassport.gov.np',
+          'Referer': 'https://nepalpassport.gov.np/en',
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
         }
       }
     );
-
-    const $ = cheerio.load(response.data);
-    const result = $('.passport-status, .status-result, table, .alert').text().trim();
-
-    if (result) {
-      res.json({ success: true, data: result });
+    if (response.data) {
+      res.json({ success: true, data: JSON.stringify(response.data, null, 2) });
     } else {
       res.json({ success: false, message: 'No status found. Please check your reference number.' });
     }
@@ -79,9 +76,8 @@ app.get('/check-detail', async (req, res) => {
 
 // Health check
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
+  res.json({ status: 'Nepal Passport Backend is running!' });
 });
-
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
